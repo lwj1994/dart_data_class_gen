@@ -2,6 +2,8 @@ name: data_class
 description: A sample command-line application.
 version: 1.0.0
 publish_to: 'none'
+executables:
+  data_class: bin/data_class.dart
 # repository: https://github.com/my_org/my_repo
 
 environment:
