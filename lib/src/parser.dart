@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:path/path.dart' as p;
@@ -15,10 +16,15 @@ class Parser {
     File file = File(path);
     if (path.endsWith(".data.dart")) return null;
     final content = file.readAsStringSync();
-    final unit = parseString(content: content).unit;
+    late ParseStringResult parseRes;
+    try {
+      parseRes = parseString(content: content);
+    } catch (e) {
+      return null;
+    }
     print("parsing $path");
     final classes = <ClassInfo>[];
-
+    final unit = parseRes.unit;
     for (var declaration in unit.declarations) {
       if (declaration is ClassDeclaration) {
         final hasAnnotation = declaration.metadata.any((m) {
