@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:data_class/src/parser.dart';
 import 'package:data_class/src/writer.dart';
 
+export 'src/annotation.dart';
+
 void generate(String path) {
   final entity = FileSystemEntity.typeSync(path);
   final isDirectory = entity == FileSystemEntityType.directory;
