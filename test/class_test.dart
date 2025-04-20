@@ -3,7 +3,7 @@
 import 'dart:collection';
 
 import 'package:collection/collection.dart';
-import 'package:data_class/src/annotation.dart';
+import 'package:data_class_annotation/data_class_annotation.dart';
 
 part 'class_test.data.dart';
 

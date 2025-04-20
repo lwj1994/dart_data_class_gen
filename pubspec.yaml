@@ -1,6 +1,7 @@
 name: data_class
 description: A sample command-line application.
 version: 1.0.0
+publish_to: 'none'
 # repository: https://github.com/my_org/my_repo
 
 environment:
@@ -13,6 +14,8 @@ dependencies:
   collection: ">=1.17.0"
   path: ">=1.7.0"
   args:
+  data_class_annotation:
+    path: "annotation"
 
 dev_dependencies:
   lints: ^5.0.0
