@@ -9,11 +9,12 @@ environment:
 # Add regular dependencies here.
 dependencies:
   # path: ^1.8.0
-  analyzer: ^7.4.1
-  collection:
-  path:
-  args:
+  analyzer: ">=7.0.0"
+  collection: ">=1.17.0"
+  path: ">=1.17.0"
+
 
 dev_dependencies:
   lints: ^5.0.0
   test: ^1.25.15
+  args:
