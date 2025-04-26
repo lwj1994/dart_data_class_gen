@@ -26,8 +26,17 @@ mixin BeanDataClass {
     'map4': map4,
   };
 
-  Bean copyWith({String? name, int? age, List<A>? list, XXList<A>? list2, XXSet<A>? set, Map<B>? map, LinkedHashMap<B>? map2, HashMap<B>? map3, XXXMap<B>? map4, }) {
-    return Bean(
+  Bean copyWith({String? name, 
+      int? age, 
+      List<A>? list, 
+      XXList<A>? list2, 
+      XXSet<A>? set, 
+      Map<B>? map, 
+      LinkedHashMap<B>? map2, 
+      HashMap<B>? map3, 
+      XXXMap<B>? map4, 
+      }) {
+    return Bean({
       name ?? this.name,
       age ?? this.age,
       list ?? this.list,
@@ -37,7 +46,7 @@ mixin BeanDataClass {
       map2 ?? this.map2,
       map3 ?? this.map3,
       map4 ?? this.map4,
-    );
+    });
   }
 
   @override
@@ -59,6 +68,14 @@ mixin BeanDataClass {
 
   @override
   int get hashCode =>
-      name.hashCode ^ age.hashCode ^ const DeepCollectionEquality().hash(list) ^ const DeepCollectionEquality().hash(list2) ^ const DeepCollectionEquality().hash(set) ^ const DeepCollectionEquality().hash(map) ^ const DeepCollectionEquality().hash(map2) ^ const DeepCollectionEquality().hash(map3) ^ const DeepCollectionEquality().hash(map4);
+      name.hashCode ^
+      age.hashCode ^
+      const DeepCollectionEquality().hash(list) ^
+      const DeepCollectionEquality().hash(list2) ^
+      const DeepCollectionEquality().hash(set) ^
+      const DeepCollectionEquality().hash(map) ^
+      const DeepCollectionEquality().hash(map2) ^
+      const DeepCollectionEquality().hash(map3) ^
+      const DeepCollectionEquality().hash(map4);
 }
 

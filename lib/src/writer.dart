@@ -24,9 +24,6 @@ class Writer {
         buffer.writeln('  abstract final ${field.type} ${field.name};');
       }
 
-      // toMap
-      _buildToMap(buffer, clazz);
-
       // copyWith
       _buildCopyWith(buffer, clazz);
 
@@ -35,6 +32,12 @@ class Writer {
 
       // hashCode
       _buildHashCode(buffer, clazz);
+      // toMap
+      _buildToMap(buffer, clazz);
+
+      if (clazz.fromMap) {
+        _buildFromMap(buffer, clazz);
+      }
 
       buffer.writeln('}\n');
     }
@@ -50,8 +53,8 @@ class Writer {
     // == override
     buffer.writeln('\n  @override');
     buffer.writeln('  bool operator ==(Object other) {');
-    buffer.writeln('    if (identical(this, other)) return true;');
-    buffer.writeln('    if (other is! ${clazz.name}) return false;');
+    buffer.writeln('    if (identical(this, other)) { return true;}');
+    buffer.writeln('    if (other is! ${clazz.name}) { return false;}');
     buffer.writeln();
     for (final field in clazz.fields) {
       final name = field.name;
@@ -59,7 +62,7 @@ class Writer {
 
       if (type.isCollection()) {
         buffer.writeln(
-          '    if (!const DeepCollectionEquality().equals($name, other.$name)) return false;',
+          '    if (!const DeepCollectionEquality().equals($name, other.$name)) { return false;}',
         );
       } else {
         buffer.writeln('    if ($name != other.$name) return false;');
@@ -88,12 +91,16 @@ class Writer {
   void _buildCopyWith(StringBuffer buffer, ClassInfo clazz) {
     buffer.write('\n  ${clazz.name} copyWith({');
     for (final field in clazz.fields) {
-      buffer.write('${field.type}? ${field.name}, \n      ');
+      buffer.write(
+        '${field.type.replaceAll('?', "")}? ${field.name}, \n      ',
+      );
     }
     buffer.writeln('}) {');
     buffer.writeln('    return ${clazz.name}(');
     for (final field in clazz.fields) {
-      buffer.writeln('      ${field.name} ?? this.${field.name},');
+      buffer.writeln(
+        '      ${field.name}: ${field.name} ?? this.${field.name},',
+      );
     }
     buffer.writeln('    );');
     buffer.writeln('  }');
@@ -105,5 +112,57 @@ class Writer {
       buffer.writeln("    '${field.name}': ${field.name},");
     }
     buffer.writeln('  };');
+  }
+
+  void _buildFromMap(StringBuffer buffer, ClassInfo clazz) {
+    buffer.writeln(
+      '\n  static ${clazz.name} fromMap(Map<String, dynamic> map)  {',
+    );
+    buffer.writeln('    return ${clazz.name}(');
+    for (final field in clazz.fields) {
+      String jsonKey = field.name;
+      if (field.jsonKey?.name.isNotEmpty == true) {
+        jsonKey = field.jsonKey?.name ?? "";
+      }
+      String getValueExpression = "";
+      String dv = "";
+      if (field.defaultValue.isNotEmpty) {
+        dv = " ?? ${field.defaultValue}";
+      }
+
+      if (field.type == "String") {
+        getValueExpression = "map[${jsonKey}]?.toString()$dv";
+      } else if (field.type == "bool") {
+        getValueExpression =
+            "map[${jsonKey}] != null ? (map[${jsonKey}] as bool?) $dv : null";
+      } else if (field.type == "int") {
+        getValueExpression =
+            "map['${jsonKey}'] != null ? int.tryParse(map['${jsonKey}']?.toString() ?? '') $dv  : null";
+      } else if (field.type == "double") {
+        getValueExpression =
+            "map['${jsonKey}'] != null ? double.tryParse(map['${jsonKey}']?.toString() ?? '') $dv : null";
+      } else if (field.type == "num") {
+        getValueExpression =
+            "map['${jsonKey}'] != null ? num.tryParse(map['${jsonKey}']?.toString() ?? '') $dv : null";
+      } else if (field.type.isList()) {
+        final index = field.type.indexOf("<");
+        final index2 = field.type.indexOf(">");
+        final itemType = field.type.substring(index + 1, index2);
+
+        if (itemType == "String") {
+          getValueExpression =
+              "(map['${jsonKey}'] != null ? (map['${jsonKey}'] as List<dynamic>?)?.map((e) => e.toString()).toList() : null)$dv";
+        } else {}
+      } else if (field.type.isMap()) {
+        getValueExpression = "(map['${jsonKey}'] as Map<String, dynamic>?) $dv";
+      } else {
+        // object
+        getValueExpression =
+            "map['${jsonKey}'] != null ? ${field.type}.fromMap(map['${jsonKey}']) $dv : null";
+      }
+
+      buffer.writeln("    ${field.name}: $getValueExpression,");
+    }
+    buffer.writeln('  );}');
   }
 }

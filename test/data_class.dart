@@ -34,17 +34,22 @@ void main() {
         //   final Map<String, String> map;
         //   final HashMap<String, String> map2;
         //   final LinkedHashMap<String, String> map3;
-        ClassInfo("Bean", "BeanDataClass", [
-          FieldInfo("name", "String"),
-          FieldInfo("age", "int"),
-          FieldInfo("list", "List<A>"),
-          FieldInfo("list2", "XXList<A>"),
-          FieldInfo("set", "XXSet<A>"),
-          FieldInfo("map", "Map<B>"),
-          FieldInfo("map2", "LinkedHashMap<B>"),
-          FieldInfo("map3", "HashMap<B>"),
-          FieldInfo("map4", "XXXMap<B>"),
-        ]),
+        ClassInfo(
+          name: "Bean",
+          mixinName: "BeanDataClass",
+          fields: [
+            FieldInfo(name: "name", type: "String"),
+            FieldInfo(name: "age", type: "int"),
+            FieldInfo(name: "list", type: "List<A>"),
+            FieldInfo(name: "list2", type: "XXList<A>"),
+            FieldInfo(name: "set", type: "XXSet<A>"),
+            FieldInfo(name: "map", type: "Map<B>"),
+            FieldInfo(name: "map2", type: "LinkedHashMap<B>"),
+            FieldInfo(name: "map3", type: "HashMap<B>"),
+            FieldInfo(name: "map4", type: "XXXMap<B>"),
+          ],
+          fromMap: false,
+        ),
       ],
     );
     final Writer writer = Writer(result);

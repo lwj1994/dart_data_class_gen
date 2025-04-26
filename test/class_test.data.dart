@@ -6,63 +6,31 @@ part of 'class_test.dart';
 mixin BeanDataClassMixin {
   abstract final String name;
   abstract final List<String> list;
-  abstract final Iterable<String> iterable;
-  abstract final Queue<String> queue;
-  abstract final QueueList<String> queueList;
-  abstract final Set<String> set;
-  abstract final Map<String, String> map;
-  abstract final HashMap<String, String> map2;
-  abstract final LinkedHashMap<String, String> map3;
-
-  Map<String, dynamic> toMap() => {
-    'name': name,
-    'list': list,
-    'iterable': iterable,
-    'queue': queue,
-    'queueList': queueList,
-    'set': set,
-    'map': map,
-    'map2': map2,
-    'map3': map3,
-  };
+  abstract final Map<String, dynamic> map;
+  abstract final Bean2? bean2;
 
   Bean copyWith({String? name, 
       List<String>? list, 
-      Iterable<String>? iterable, 
-      Queue<String>? queue, 
-      QueueList<String>? queueList, 
-      Set<String>? set, 
-      Map<String, String>? map, 
-      HashMap<String, String>? map2, 
-      LinkedHashMap<String, String>? map3, 
+      Map<String, dynamic>? map, 
+      Bean2? bean2, 
       }) {
     return Bean(
-      name ?? this.name,
-      list ?? this.list,
-      iterable ?? this.iterable,
-      queue ?? this.queue,
-      queueList ?? this.queueList,
-      set ?? this.set,
-      map ?? this.map,
-      map2 ?? this.map2,
-      map3 ?? this.map3,
+      name: name ?? this.name,
+      list: list ?? this.list,
+      map: map ?? this.map,
+      bean2: bean2 ?? this.bean2,
     );
   }
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! Bean) return false;
+    if (identical(this, other)) { return true;}
+    if (other is! Bean) { return false;}
 
     if (name != other.name) return false;
-    if (!const DeepCollectionEquality().equals(list, other.list)) return false;
-    if (!const DeepCollectionEquality().equals(iterable, other.iterable)) return false;
-    if (!const DeepCollectionEquality().equals(queue, other.queue)) return false;
-    if (!const DeepCollectionEquality().equals(queueList, other.queueList)) return false;
-    if (!const DeepCollectionEquality().equals(set, other.set)) return false;
-    if (!const DeepCollectionEquality().equals(map, other.map)) return false;
-    if (!const DeepCollectionEquality().equals(map2, other.map2)) return false;
-    if (!const DeepCollectionEquality().equals(map3, other.map3)) return false;
+    if (!const DeepCollectionEquality().equals(list, other.list)) { return false;}
+    if (!const DeepCollectionEquality().equals(map, other.map)) { return false;}
+    if (bean2 != other.bean2) return false;
     return true;
   }
 
@@ -70,12 +38,14 @@ mixin BeanDataClassMixin {
   int get hashCode =>
       name.hashCode ^
       const DeepCollectionEquality().hash(list) ^
-      const DeepCollectionEquality().hash(iterable) ^
-      const DeepCollectionEquality().hash(queue) ^
-      const DeepCollectionEquality().hash(queueList) ^
-      const DeepCollectionEquality().hash(set) ^
       const DeepCollectionEquality().hash(map) ^
-      const DeepCollectionEquality().hash(map2) ^
-      const DeepCollectionEquality().hash(map3);
+      bean2.hashCode;
+
+  Map<String, dynamic> toMap() => {
+    'name': name,
+    'list': list,
+    'map': map,
+    'bean2': bean2,
+  };
 }
 

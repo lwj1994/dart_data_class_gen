@@ -1,42 +1,66 @@
 // @author luwenjie on 2025/4/19 17:38:43
 
-import 'dart:collection';
-
 import 'package:collection/collection.dart';
 import 'package:data_class_annotation/data_class_annotation.dart';
 
 part 'class_test.data.dart';
 
-@DataClass()
+@DataClass(fromMap: false)
 class Bean with BeanDataClassMixin {
   @override
+  @JsonKey(name: "name2", readValue: Bean.redValue)
   final String name;
   @override
   final List<String> list;
   @override
-  final Iterable<String> iterable;
-  @override
-  final Queue<String> queue;
-  @override
-  final QueueList<String> queueList;
-  @override
-  final Set<String> set;
-  @override
-  final Map<String, String> map;
-  @override
-  final HashMap<String, String> map2;
-  @override
-  final LinkedHashMap<String, String> map3;
+  final Map<String, dynamic> map;
 
-  Bean(
-    this.name,
-    this.list,
-    this.iterable,
-    this.queue,
-    this.queueList,
-    this.set,
-    this.map,
-    this.map2,
-    this.map3,
-  );
+  final Bean2? bean2;
+
+  static Object? redValue(Map map, String key) {
+    return map[key];
+  }
+
+  Bean({
+    this.name = "a",
+    this.list = const [],
+    this.map = const {},
+    this.bean2,
+  });
+}
+
+class Bean2 {
+  final String name;
+
+  //<editor-fold desc="Data Methods">
+  const Bean2({required this.name});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Bean2 &&
+          runtimeType == other.runtimeType &&
+          name == other.name);
+
+  @override
+  int get hashCode => name.hashCode;
+
+  @override
+  String toString() {
+    return 'Bean2{' + ' name: $name,' + '}';
+  }
+
+  Bean2 copyWith({String? name}) {
+    return Bean2(name: name ?? this.name);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'name': this.name};
+  }
+
+  factory Bean2.fromMap(Map<String, dynamic> map) {
+    return Bean2(name: map['name'] as String);
+  }
+
+  //</editor-fold>
 }
