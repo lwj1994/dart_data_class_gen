@@ -10,12 +10,13 @@ mixin BeanDataClassMixin {
   abstract final Map<String, dynamic> map;
   abstract final Bean2? bean2;
 
-  Bean copyWith({String? name, 
-      List<String>? list, 
-      List<Bean2>? list2, 
-      Map<String, dynamic>? map, 
-      Bean2? bean2, 
-      }) {
+  Bean copyWith({
+    String? name,
+    List<String>? list,
+    List<Bean2>? list2,
+    Map<String, dynamic>? map,
+    Bean2? bean2,
+  }) {
     return Bean(
       name: name ?? this.name,
       list: list ?? this.list,
@@ -27,13 +28,23 @@ mixin BeanDataClassMixin {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) { return true;}
-    if (other is! Bean) { return false;}
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! Bean) {
+      return false;
+    }
 
     if (name != other.name) return false;
-    if (!const DeepCollectionEquality().equals(list, other.list)) { return false;}
-    if (!const DeepCollectionEquality().equals(list2, other.list2)) { return false;}
-    if (!const DeepCollectionEquality().equals(map, other.map)) { return false;}
+    if (!const DeepCollectionEquality().equals(list, other.list)) {
+      return false;
+    }
+    if (!const DeepCollectionEquality().equals(list2, other.list2)) {
+      return false;
+    }
+    if (!const DeepCollectionEquality().equals(map, other.map)) {
+      return false;
+    }
     if (bean2 != other.bean2) return false;
     return true;
   }
@@ -47,11 +58,42 @@ mixin BeanDataClassMixin {
       bean2.hashCode;
 
   Map<String, dynamic> toMap() => {
-    'name': name,
-    'list': list,
-    'list2': list2,
-    'map': map,
-    'bean2': bean2,
-  };
+        'name': name,
+        'list': list,
+        'list2': list2,
+        'map': map,
+        'bean2': bean2,
+      };
 }
 
+mixin Bean3DataClassMixin {
+  abstract final String name;
+
+  Bean3 copyWith({
+    String? name,
+  }) {
+    return Bean3(
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! Bean3) {
+      return false;
+    }
+
+    if (name != other.name) return false;
+    return true;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+
+  Map<String, dynamic> toMap() => {
+        'name': name,
+      };
+}

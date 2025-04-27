@@ -66,5 +66,12 @@ class Bean2 {
     return Bean2(name: map['name'] as String);
   }
 
-  //</editor-fold>
+//</editor-fold>
+}
+
+@DataClass(fromMap: false)
+class Bean3 {
+  final String name;
+
+  Bean3({this.name = ""});
 }

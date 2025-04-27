@@ -13,6 +13,7 @@ class Parser {
   Parser(this.path);
 
   ParseResult? parseDartFile() {
+    final res = <ParseResult>[];
     File file = File(path);
     if (path.endsWith(".data.dart")) return null;
     final content = file.readAsStringSync();
@@ -126,15 +127,13 @@ class Parser {
           ),
         );
       }
-
-      if (classes.isEmpty) return null;
-
-      final baseName = p.basename(path);
-      final partOf = "part of '$baseName';";
-      final outputPath = path.replaceAll('.dart', '.data.dart');
-
-      return ParseResult(outputPath, partOf, classes);
     }
-    return null;
+
+    if (classes.isEmpty) return null;
+    final baseName = p.basename(path);
+    final partOf = "part of '$baseName';";
+    final outputPath = path.replaceAll('.dart', '.data.dart');
+
+    return ParseResult(outputPath, partOf, classes);
   }
 }
