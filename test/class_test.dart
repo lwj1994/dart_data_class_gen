@@ -5,7 +5,7 @@ import 'package:data_class_annotation/data_class_annotation.dart';
 
 part 'class_test.data.dart';
 
-@DataClass(fromMap: true)
+@dataClass
 class Bean with BeanDataClassMixin {
   @override
   @JsonKey(name: "name2", readValue: Bean.redValue)

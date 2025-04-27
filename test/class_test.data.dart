@@ -10,13 +10,12 @@ mixin BeanDataClassMixin {
   abstract final Map<String, dynamic> map;
   abstract final Bean2? bean2;
 
-  Bean copyWith({
-    String? name,
-    List<String>? list,
-    List<Bean2>? list2,
-    Map<String, dynamic>? map,
-    Bean2? bean2,
-  }) {
+  Bean copyWith({String? name, 
+      List<String>? list, 
+      List<Bean2>? list2, 
+      Map<String, dynamic>? map, 
+      Bean2? bean2, 
+      }) {
     return Bean(
       name: name ?? this.name,
       list: list ?? this.list,
@@ -28,23 +27,13 @@ mixin BeanDataClassMixin {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other is! Bean) {
-      return false;
-    }
+    if (identical(this, other)) { return true;}
+    if (other is! Bean) { return false;}
 
     if (name != other.name) return false;
-    if (!const DeepCollectionEquality().equals(list, other.list)) {
-      return false;
-    }
-    if (!const DeepCollectionEquality().equals(list2, other.list2)) {
-      return false;
-    }
-    if (!const DeepCollectionEquality().equals(map, other.map)) {
-      return false;
-    }
+    if (!const DeepCollectionEquality().equals(list, other.list)) { return false;}
+    if (!const DeepCollectionEquality().equals(list2, other.list2)) { return false;}
+    if (!const DeepCollectionEquality().equals(map, other.map)) { return false;}
     if (bean2 != other.bean2) return false;
     return true;
   }
@@ -64,26 +53,5 @@ mixin BeanDataClassMixin {
     'map': map,
     'bean2': bean2,
   };
-
-  static Bean fromMap(Map<String, dynamic> map) {
-    return Bean(
-      name: Bean.redValue(map, '"name2"')?.toString() ?? "a",
-      list:
-          (map['list'] != null
-              ? (map['list'] as List<dynamic>?)
-                  ?.map((e) => e.toString())
-                  .toList()
-              : null) ??
-          const [],
-      list2:
-          (map['list2'] != null
-              ? (map['list2'] as List<dynamic>?)
-                  ?.map((e) => Bean2.fromMap(e))
-                  .toList()
-              : null) ??
-          const [],
-      map: (map['map'] as Map<String, dynamic>?) ?? const {},
-      bean2: map['bean2'] != null ? Bean2?.fromMap(map['bean2']) : null,
-    );
-  }
 }
+

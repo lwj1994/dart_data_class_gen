@@ -32,6 +32,11 @@ class Parser {
         });
         if (!hasDataAnnotation) continue;
 
+        final className = declaration.name.lexeme;
+        final fields = <FieldInfo>[];
+        final defaultValueMap = <String, String>{};
+        print("find class $className");
+
         final meta = declaration.metadata.firstWhere((e) {
           return e.name.name == "dataClass" || e.name.name == "DataClass";
         });
@@ -46,82 +51,80 @@ class Parser {
               fromMap = value.expression.toSource() == "true";
             }
           }
+        }
 
-          final className = declaration.name.lexeme;
-          final fields = <FieldInfo>[];
-          final defaultValueMap = <String, String>{};
-
-          declaration.members.whereType<ConstructorDeclaration>().forEach((
-            member,
-          ) {
-            if (member.factoryKeyword != null) {
-              //
-            } else {
-              // 主构造函数
-              for (var parameter in member.parameters.parameters) {
-                if (parameter is DefaultFormalParameter) {
-                  if (parameter.defaultValue != null) {
-                    defaultValueMap[parameter.name?.lexeme ?? ""] =
-                        parameter.defaultValue?.toSource() ?? "";
-                  }
-                }
-              }
-            }
-          });
-
-          for (final member in declaration.members) {
-            if (member is FieldDeclaration && !member.isStatic) {
-              // fields
-              final type = member.fields.type?.toSource() ?? 'dynamic';
-              JsonKeyInfo? jsonKeyInfo;
-              for (var e in member.metadata) {
-                final name = e.name.name;
-                if (name == "JsonKey") {
-                  jsonKeyInfo = JsonKeyInfo(name: "", readValue: "");
-                  List<Expression> arguments = e.arguments?.arguments ?? [];
-                  for (var element in arguments) {
-                    if (element is NamedExpression) {
-                      final name = element.name.label.name;
-                      if (name == "name") {
-                        jsonKeyInfo = jsonKeyInfo!.copyWith(
-                          name: element.expression.toSource(),
-                        );
-                      } else if (name == "readValue") {
-                        jsonKeyInfo = jsonKeyInfo!.copyWith(
-                          readValue: element.expression.toSource(),
-                        );
-                      }
-                    }
-                  }
-                }
-              }
-
-              for (final varDecl in member.fields.variables) {
-                if (!varDecl.isConst) {
-                  final name = varDecl.name.lexeme;
-                  fields.add(
-                    FieldInfo(
-                      name: name,
-                      type: type,
-                      isFinal: varDecl.isFinal,
-                      jsonKey: jsonKeyInfo,
-                      defaultValue: defaultValueMap[name] ?? "",
-                    ),
-                  );
+        // ConstructorDeclaration
+        declaration.members.whereType<ConstructorDeclaration>().forEach((
+          member,
+        ) {
+          if (member.factoryKeyword != null) {
+            //
+          } else {
+            // 主构造函数
+            for (var parameter in member.parameters.parameters) {
+              if (parameter is DefaultFormalParameter) {
+                if (parameter.defaultValue != null) {
+                  defaultValueMap[parameter.name?.lexeme ?? ""] =
+                      parameter.defaultValue?.toSource() ?? "";
                 }
               }
             }
           }
-          print("find class $className");
-          classes.add(
-            ClassInfo(
-              name: className,
-              mixinName: '${className}DataClassMixin',
-              fields: fields,
-              fromMap: fromMap,
-            ),
-          );
+        });
+
+        // fields
+        for (final member in declaration.members) {
+          if (member is FieldDeclaration && !member.isStatic) {
+            // fields
+            final type = member.fields.type?.toSource() ?? 'dynamic';
+            JsonKeyInfo? jsonKeyInfo;
+            for (var e in member.metadata) {
+              final name = e.name.name;
+              if (name == "JsonKey") {
+                jsonKeyInfo = JsonKeyInfo(name: "", readValue: "");
+                List<Expression> arguments = e.arguments?.arguments ?? [];
+                for (var element in arguments) {
+                  if (element is NamedExpression) {
+                    final name = element.name.label.name;
+                    if (name == "name") {
+                      jsonKeyInfo = jsonKeyInfo!.copyWith(
+                        name: element.expression.toSource(),
+                      );
+                    } else if (name == "readValue") {
+                      jsonKeyInfo = jsonKeyInfo!.copyWith(
+                        readValue: element.expression.toSource(),
+                      );
+                    }
+                  }
+                }
+              }
+            }
+
+            for (final varDecl in member.fields.variables) {
+              if (!varDecl.isConst) {
+                final name = varDecl.name.lexeme;
+                fields.add(
+                  FieldInfo(
+                    name: name,
+                    type: type,
+                    isFinal: varDecl.isFinal,
+                    jsonKey: jsonKeyInfo,
+                    defaultValue: defaultValueMap[name] ?? "",
+                  ),
+                );
+              }
+            }
+          }
         }
+
+        classes.add(
+          ClassInfo(
+            name: className,
+            mixinName: '${className}DataClassMixin',
+            fields: fields,
+            fromMap: fromMap,
+          ),
+        );
       }
 
       if (classes.isEmpty) return null;
