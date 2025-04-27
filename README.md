@@ -1,13 +1,14 @@
 # dart_data_class_gen
 
-因为 dart_build_runner 的速度实在太慢了，尤其在大型项目。所以写了这个脚本来快速生成。
-
+The speed of `dart_build_runner` is extremely slow, especially in large-scale projects. Therefore,
+this script was developed to enable rapid generation.
 
 ## Usage
 
-1. dependency:
+1. **Dependency Setup**
 
-Add data_class_annotation to your `pubspec.yaml`:
+   First, add `data_class_annotation` to your `pubspec.yaml`:
+
 ```yaml
   data_class_annotation:
     git:
@@ -16,13 +17,16 @@ Add data_class_annotation to your `pubspec.yaml`:
       path: annotation
 ```
 
+    Then, install the CLI tool:
 
-Add cli
 ```shell
 dart pub global activate --source git https://github.com/lwj1994/dart_data_class_gen
 ```
 
-2. Add Annotation to model
+2. **Add Annotations to the Model**
+
+   Incorporate the necessary annotations into your model class as shown below:
+
 ```dart
 @DataClass(fromMap: true)
 class Bean with BeanDataClassMixin {
@@ -40,7 +44,10 @@ class Bean with BeanDataClassMixin {
 }
 ```
 
-3. Run the cli
-```shell
+3. **Execute the CLI**
 
-```
+   Run the following command in the terminal to generate the required code:
+
+```shell
+data_class_gen .
+``` 
