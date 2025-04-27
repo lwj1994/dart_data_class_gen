@@ -14,18 +14,6 @@ mixin BeanDataClass {
   abstract final HashMap<B> map3;
   abstract final XXXMap<B> map4;
 
-  Map<String, dynamic> toMap() => {
-    'name': name,
-    'age': age,
-    'list': list,
-    'list2': list2,
-    'set': set,
-    'map': map,
-    'map2': map2,
-    'map3': map3,
-    'map4': map4,
-  };
-
   Bean copyWith({String? name, 
       int? age, 
       List<A>? list, 
@@ -36,33 +24,33 @@ mixin BeanDataClass {
       HashMap<B>? map3, 
       XXXMap<B>? map4, 
       }) {
-    return Bean({
-      name ?? this.name,
-      age ?? this.age,
-      list ?? this.list,
-      list2 ?? this.list2,
-      set ?? this.set,
-      map ?? this.map,
-      map2 ?? this.map2,
-      map3 ?? this.map3,
-      map4 ?? this.map4,
-    });
+    return Bean(
+      name: name ?? this.name,
+      age: age ?? this.age,
+      list: list ?? this.list,
+      list2: list2 ?? this.list2,
+      set: set ?? this.set,
+      map: map ?? this.map,
+      map2: map2 ?? this.map2,
+      map3: map3 ?? this.map3,
+      map4: map4 ?? this.map4,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! Bean) return false;
+    if (identical(this, other)) { return true;}
+    if (other is! Bean) { return false;}
 
     if (name != other.name) return false;
     if (age != other.age) return false;
-    if (!const DeepCollectionEquality().equals(list, other.list)) return false;
-    if (!const DeepCollectionEquality().equals(list2, other.list2)) return false;
-    if (!const DeepCollectionEquality().equals(set, other.set)) return false;
-    if (!const DeepCollectionEquality().equals(map, other.map)) return false;
-    if (!const DeepCollectionEquality().equals(map2, other.map2)) return false;
-    if (!const DeepCollectionEquality().equals(map3, other.map3)) return false;
-    if (!const DeepCollectionEquality().equals(map4, other.map4)) return false;
+    if (!const DeepCollectionEquality().equals(list, other.list)) { return false;}
+    if (!const DeepCollectionEquality().equals(list2, other.list2)) { return false;}
+    if (!const DeepCollectionEquality().equals(set, other.set)) { return false;}
+    if (!const DeepCollectionEquality().equals(map, other.map)) { return false;}
+    if (!const DeepCollectionEquality().equals(map2, other.map2)) { return false;}
+    if (!const DeepCollectionEquality().equals(map3, other.map3)) { return false;}
+    if (!const DeepCollectionEquality().equals(map4, other.map4)) { return false;}
     return true;
   }
 
@@ -77,5 +65,17 @@ mixin BeanDataClass {
       const DeepCollectionEquality().hash(map2) ^
       const DeepCollectionEquality().hash(map3) ^
       const DeepCollectionEquality().hash(map4);
+
+  Map<String, dynamic> toMap() => {
+    'name': name,
+    'age': age,
+    'list': list,
+    'list2': list2,
+    'set': set,
+    'map': map,
+    'map2': map2,
+    'map3': map3,
+    'map4': map4,
+  };
 }
 

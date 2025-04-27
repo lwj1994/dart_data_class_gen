@@ -14,7 +14,7 @@ const dataClass = DataClass();
 
 class JsonKey {
   final String name;
-  final Object? Function(Map, String)? readValue;
+  final Object? Function(Map<dynamic, dynamic> map, String key)? readValue;
 
   const JsonKey({this.name = "", this.readValue});
 }

@@ -132,5 +132,6 @@ class Parser {
 
       return ParseResult(outputPath, partOf, classes);
     }
+    return null;
   }
 }

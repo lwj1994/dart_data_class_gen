@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:data_class/src/util.dart';
+import 'package:data_class_gen/src/util.dart';
 
 import 'model.dart';
 
@@ -130,20 +130,25 @@ class Writer {
         dv = " ?? ${field.defaultValue}";
       }
 
+      String valueExpress = "map['$jsonKey']";
+      if (field.jsonKey?.readValue.isNotEmpty == true) {
+        valueExpress = "${field.jsonKey?.readValue}(map, '$jsonKey')";
+      }
+
       if (field.type == "String") {
-        getValueExpression = "map[${jsonKey}]?.toString()$dv";
+        getValueExpression = "$valueExpress?.toString()$dv";
       } else if (field.type == "bool") {
         getValueExpression =
-            "map[${jsonKey}] != null ? (map[${jsonKey}] as bool?) $dv : null";
+            "$valueExpress != null ? ($valueExpress as bool?) $dv : null";
       } else if (field.type == "int") {
         getValueExpression =
-            "map['${jsonKey}'] != null ? int.tryParse(map['${jsonKey}']?.toString() ?? '') $dv  : null";
+            "$valueExpress != null ? int.tryParse($valueExpress?.toString() ?? '') $dv  : null";
       } else if (field.type == "double") {
         getValueExpression =
-            "map['${jsonKey}'] != null ? double.tryParse(map['${jsonKey}']?.toString() ?? '') $dv : null";
+            "$valueExpress != null ? double.tryParse($valueExpress?.toString() ?? '') $dv : null";
       } else if (field.type == "num") {
         getValueExpression =
-            "map['${jsonKey}'] != null ? num.tryParse(map['${jsonKey}']?.toString() ?? '') $dv : null";
+            "$valueExpress != null ? num.tryParse($valueExpress?.toString() ?? '') $dv : null";
       } else if (field.type.isList()) {
         final index = field.type.indexOf("<");
         final index2 = field.type.indexOf(">");
@@ -151,14 +156,17 @@ class Writer {
 
         if (itemType == "String") {
           getValueExpression =
-              "(map['${jsonKey}'] != null ? (map['${jsonKey}'] as List<dynamic>?)?.map((e) => e.toString()).toList() : null)$dv";
-        } else {}
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => e.toString()).toList() : null)$dv";
+        } else {
+          getValueExpression =
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => $itemType.fromMap(e)).toList() : null)$dv";
+        }
       } else if (field.type.isMap()) {
-        getValueExpression = "(map['${jsonKey}'] as Map<String, dynamic>?) $dv";
+        getValueExpression = "($valueExpress as Map<String, dynamic>?) $dv";
       } else {
         // object
         getValueExpression =
-            "map['${jsonKey}'] != null ? ${field.type}.fromMap(map['${jsonKey}']) $dv : null";
+            "$valueExpress != null ? ${field.type}.fromMap($valueExpress) $dv : null";
       }
 
       buffer.writeln("    ${field.name}: $getValueExpression,");

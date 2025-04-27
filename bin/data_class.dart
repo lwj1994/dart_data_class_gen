@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:data_class/data_class.dart';
+import 'package:data_class_gen/data_class.dart';
 
 void main(List<String> args) {
   print(args);

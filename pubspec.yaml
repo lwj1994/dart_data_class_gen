@@ -1,9 +1,8 @@
-name: data_class
+name: data_class_gen
 description: A sample command-line application.
-version: 1.0.0
-publish_to: 'none'
+version: 0.0.1
 executables:
-  data_class:
+  data_class_gen:
 # repository: https://github.com/my_org/my_repo
 
 environment:

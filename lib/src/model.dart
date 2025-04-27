@@ -41,11 +41,7 @@ class ClassInfo {
 
   @override
   String toString() {
-    return 'ClassInfo{' +
-        ' name: $name,' +
-        ' mixinName: $mixinName,' +
-        ' fromMap: $fromMap,' +
-        ' fields: $fields,' +
+    return 'ClassInfo{' ' name: $name,' ' mixinName: $mixinName,' ' fromMap: $fromMap,' ' fields: $fields,' +
         '}';
   }
 
@@ -65,10 +61,10 @@ class ClassInfo {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': this.name,
-      'mixinName': this.mixinName,
-      'fromMap': this.fromMap,
-      'fields': this.fields,
+      'name': name,
+      'mixinName': mixinName,
+      'fromMap': fromMap,
+      'fields': fields,
     };
   }
 
@@ -122,11 +118,7 @@ class FieldInfo {
 
   @override
   String toString() {
-    return 'FieldInfo{' +
-        ' defaultValue: $defaultValue,' +
-        ' name: $name,' +
-        ' type: $type,' +
-        ' isFinal: $isFinal,' +
+    return 'FieldInfo{' ' defaultValue: $defaultValue,' ' name: $name,' ' type: $type,' ' isFinal: $isFinal,' +
         ' jsonKey: $jsonKey,' +
         '}';
   }
@@ -149,11 +141,11 @@ class FieldInfo {
 
   Map<String, dynamic> toMap() {
     return {
-      'defaultValue': this.defaultValue,
-      'name': this.name,
-      'type': this.type,
-      'isFinal': this.isFinal,
-      'jsonKey': this.jsonKey,
+      'defaultValue': defaultValue,
+      'name': name,
+      'type': type,
+      'isFinal': isFinal,
+      'jsonKey': jsonKey,
     };
   }
 
@@ -190,7 +182,7 @@ class JsonKeyInfo {
 
   @override
   String toString() {
-    return 'JsonKeyInfo{' + ' name: $name,' + ' readValue: $readValue,' + '}';
+    return 'JsonKeyInfo{' ' name: $name,' ' readValue: $readValue,' '}';
   }
 
   JsonKeyInfo copyWith({String? name, String? readValue}) {
@@ -201,7 +193,7 @@ class JsonKeyInfo {
   }
 
   Map<String, dynamic> toMap() {
-    return {'name': this.name, 'readValue': this.readValue};
+    return {'name': name, 'readValue': readValue};
   }
 
   factory JsonKeyInfo.fromMap(Map<String, dynamic> map) {
