@@ -3,7 +3,7 @@
 
 part of 'class_test.dart';
 
-mixin BeanDataClassMixin {
+mixin _BeanMixin {
   abstract final String name;
   abstract final List<String> list;
   abstract final List<Bean2> list2;
@@ -66,7 +66,7 @@ mixin BeanDataClassMixin {
       };
 }
 
-mixin Bean3DataClassMixin {
+mixin _Bean3 {
   abstract final String name;
 
   Bean3 copyWith({

@@ -6,7 +6,7 @@ import 'package:data_class_annotation/data_class_annotation.dart';
 part 'class_test.data.dart';
 
 @dataClass
-class Bean with BeanDataClassMixin {
+class Bean with _BeanMixin {
   @override
   @JsonKey(name: "name2", readValue: Bean.redValue)
   final String name;
@@ -69,8 +69,8 @@ class Bean2 {
 //</editor-fold>
 }
 
-@DataClass(fromMap: false)
-class Bean3 {
+@DataClass(fromMap: false, name: "_Bean3")
+class Bean3 with _Bean3 {
   final String name;
 
   Bean3({this.name = ""});

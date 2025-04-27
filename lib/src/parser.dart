@@ -43,6 +43,7 @@ class Parser {
         });
 
         bool fromMap = false;
+        String mixinName = "";
         List<Expression> arguments = meta.arguments?.arguments ?? [];
         for (var value in arguments) {
           if (value is NamedExpression) {
@@ -50,6 +51,8 @@ class Parser {
             if (name == "fromMap") {
               // 处理类名
               fromMap = value.expression.toSource() == "true";
+            } else if (name == "name") {
+              mixinName = value.expression.toSource().replaceAll("\"", "");
             }
           }
         }
@@ -121,7 +124,7 @@ class Parser {
         classes.add(
           ClassInfo(
             name: className,
-            mixinName: '${className}DataClassMixin',
+            mixinName: mixinName.isEmpty ? '_${className}Mixin' : mixinName,
             fields: fields,
             fromMap: fromMap,
           ),

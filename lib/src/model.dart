@@ -41,8 +41,11 @@ class ClassInfo {
 
   @override
   String toString() {
-    return 'ClassInfo{' ' name: $name,' ' mixinName: $mixinName,' ' fromMap: $fromMap,' ' fields: $fields,' +
-        '}';
+    return 'ClassInfo{'
+            ' name: $name,'
+            ' mixinName: $mixinName,'
+            ' fromMap: $fromMap,'
+            ' fields: $fields,' '}';
   }
 
   ClassInfo copyWith({
@@ -118,9 +121,11 @@ class FieldInfo {
 
   @override
   String toString() {
-    return 'FieldInfo{' ' defaultValue: $defaultValue,' ' name: $name,' ' type: $type,' ' isFinal: $isFinal,' +
-        ' jsonKey: $jsonKey,' +
-        '}';
+    return 'FieldInfo{'
+            ' defaultValue: $defaultValue,'
+            ' name: $name,'
+            ' type: $type,'
+            ' isFinal: $isFinal,' ' jsonKey: $jsonKey,' '}';
   }
 
   FieldInfo copyWith({

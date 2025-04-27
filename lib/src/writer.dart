@@ -18,7 +18,7 @@ class Writer {
     buffer.writeln();
 
     for (final clazz in result.classes) {
-      buffer.writeln('mixin ${clazz.mixinName} {');
+      buffer.writeln("mixin ${clazz.mixinName} {");
 
       for (final field in clazz.fields) {
         buffer.writeln('  abstract final ${field.type} ${field.name};');
@@ -75,16 +75,14 @@ class Writer {
   void _buildHashCode(StringBuffer buffer, ClassInfo clazz) {
     buffer.writeln('\n  @override');
     buffer.writeln('  int get hashCode =>');
-    final hashParts = clazz.fields
-        .map((f) {
-          final name = f.name;
-          final type = f.type;
-          if (type.isCollection()) {
-            return 'const DeepCollectionEquality().hash($name)';
-          }
-          return '$name.hashCode';
-        })
-        .join(' ^\n      ');
+    final hashParts = clazz.fields.map((f) {
+      final name = f.name;
+      final type = f.type;
+      if (type.isCollection()) {
+        return 'const DeepCollectionEquality().hash($name)';
+      }
+      return '$name.hashCode';
+    }).join(' ^\n      ');
     buffer.writeln('      $hashParts;');
   }
 
