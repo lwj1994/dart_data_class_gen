@@ -28,6 +28,8 @@ dart pub global activate --source git https://github.com/lwj1994/dart_data_class
    Incorporate the necessary annotations into your model class as shown below:
 
 ```dart
+part 'model.data.dart';
+
 @DataClass(fromMap: true)
 class Bean with BeanDataClassMixin {
   @override
