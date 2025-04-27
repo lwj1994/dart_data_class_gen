@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:data_class_gen/data_class.dart';
+import 'package:data_class_gen/data_class_gen.dart';
 import 'package:data_class_gen/src/model.dart';
 import 'package:data_class_gen/src/parser.dart';
 import 'package:data_class_gen/src/writer.dart';
