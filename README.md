@@ -31,7 +31,7 @@ dart pub global activate --source git https://github.com/lwj1994/dart_data_class
 part 'model.data.dart';
 
 @DataClass(fromMap: true)
-class Bean with BeanDataClassMixin {
+class Bean with _BeanMixin {
   @override
   @JsonKey(name: "name", readValue: Bean.redValue)
   final String name;
