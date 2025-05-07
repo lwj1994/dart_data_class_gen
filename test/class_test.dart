@@ -18,6 +18,9 @@ class Bean with _BeanMixin {
   final Map<String, dynamic> map;
 
   @override
+  final List<String> Function()? builderFunction;
+
+  @override
   final Bean2? bean2;
 
   static Object? redValue(Map map, String key) {
@@ -30,6 +33,7 @@ class Bean with _BeanMixin {
     this.list2 = const [],
     this.map = const {},
     this.bean2,
+    this.builderFunction,
   });
 }
 
@@ -71,6 +75,7 @@ class Bean2 {
 
 @DataClass(fromMap: false, name: "_Bean3")
 class Bean3 with _Bean3 {
+  @override
   final String name;
 
   Bean3({this.name = ""});

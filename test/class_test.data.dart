@@ -8,6 +8,7 @@ mixin _BeanMixin {
   abstract final List<String> list;
   abstract final List<Bean2> list2;
   abstract final Map<String, dynamic> map;
+  abstract final List<String> Function()? builderFunction;
   abstract final Bean2? bean2;
 
   Bean copyWith({
@@ -15,6 +16,7 @@ mixin _BeanMixin {
     List<String>? list,
     List<Bean2>? list2,
     Map<String, dynamic>? map,
+    List<String> Function()? builderFunction,
     Bean2? bean2,
   }) {
     return Bean(
@@ -22,6 +24,7 @@ mixin _BeanMixin {
       list: list ?? this.list,
       list2: list2 ?? this.list2,
       map: map ?? this.map,
+      builderFunction: builderFunction ?? this.builderFunction,
       bean2: bean2 ?? this.bean2,
     );
   }
@@ -45,6 +48,7 @@ mixin _BeanMixin {
     if (!const DeepCollectionEquality().equals(map, other.map)) {
       return false;
     }
+    if (builderFunction != other.builderFunction) return false;
     if (bean2 != other.bean2) return false;
     return true;
   }
@@ -55,6 +59,7 @@ mixin _BeanMixin {
       const DeepCollectionEquality().hash(list) ^
       const DeepCollectionEquality().hash(list2) ^
       const DeepCollectionEquality().hash(map) ^
+      const DeepCollectionEquality().hash(builderFunction) ^
       bean2.hashCode;
 
   Map<String, dynamic> toMap() => {
@@ -62,6 +67,7 @@ mixin _BeanMixin {
         'list': list,
         'list2': list2,
         'map': map,
+        'builderFunction': builderFunction,
         'bean2': bean2,
       };
 }

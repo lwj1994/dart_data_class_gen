@@ -59,8 +59,11 @@ class Writer {
     for (final field in clazz.fields) {
       final name = field.name;
       final type = field.type;
-
-      if (type.isCollection()) {
+      if (field.isRecord) {
+        buffer.writeln('    if ($name != other.$name) return false;');
+      } else if (field.isFunction) {
+        buffer.writeln('    if ($name != other.$name) return false;');
+      } else if (type.isCollection()) {
         buffer.writeln(
           '    if (!const DeepCollectionEquality().equals($name, other.$name)) { return false;}',
         );

@@ -42,10 +42,11 @@ class ClassInfo {
   @override
   String toString() {
     return 'ClassInfo{'
-            ' name: $name,'
-            ' mixinName: $mixinName,'
-            ' fromMap: $fromMap,'
-            ' fields: $fields,' '}';
+        ' name: $name,'
+        ' mixinName: $mixinName,'
+        ' fromMap: $fromMap,'
+        ' fields: $fields,'
+        '}';
   }
 
   ClassInfo copyWith({
@@ -87,6 +88,8 @@ class FieldInfo {
   final String defaultValue;
   final String name;
   final String type;
+  final bool isFunction;
+  final bool isRecord;
   final bool isFinal;
   final JsonKeyInfo? jsonKey;
 
@@ -97,6 +100,8 @@ class FieldInfo {
     required this.name,
     this.type = "dynamic",
     this.isFinal = true,
+    this.isFunction = false,
+    this.isRecord = false,
     this.jsonKey,
   });
 
@@ -122,10 +127,12 @@ class FieldInfo {
   @override
   String toString() {
     return 'FieldInfo{'
-            ' defaultValue: $defaultValue,'
-            ' name: $name,'
-            ' type: $type,'
-            ' isFinal: $isFinal,' ' jsonKey: $jsonKey,' '}';
+        ' defaultValue: $defaultValue,'
+        ' name: $name,'
+        ' type: $type,'
+        ' isFinal: $isFinal,'
+        ' jsonKey: $jsonKey,'
+        '}';
   }
 
   FieldInfo copyWith({

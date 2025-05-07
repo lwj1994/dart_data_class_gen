@@ -80,6 +80,8 @@ class Parser {
         for (final member in declaration.members) {
           if (member is FieldDeclaration && !member.isStatic) {
             // fields
+            bool isFunction = member.fields.type is GenericFunctionType;
+            bool isRecord = member.fields.type is RecordTypeAnnotation;
             final type = member.fields.type?.toSource() ?? 'dynamic';
             JsonKeyInfo? jsonKeyInfo;
             for (var e in member.metadata) {
@@ -112,7 +114,9 @@ class Parser {
                     name: name,
                     type: type,
                     isFinal: varDecl.isFinal,
+                    isFunction: isFunction,
                     jsonKey: jsonKeyInfo,
+                    isRecord: isRecord,
                     defaultValue: defaultValueMap[name] ?? "",
                   ),
                 );
