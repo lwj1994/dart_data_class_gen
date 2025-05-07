@@ -11,14 +11,13 @@ mixin _BeanMixin {
   abstract final List<String> Function()? builderFunction;
   abstract final Bean2? bean2;
 
-  Bean copyWith({
-    String? name,
-    List<String>? list,
-    List<Bean2>? list2,
-    Map<String, dynamic>? map,
-    List<String> Function()? builderFunction,
-    Bean2? bean2,
-  }) {
+  Bean copyWith({String? name, 
+      List<String>? list, 
+      List<Bean2>? list2, 
+      Map<String, dynamic>? map, 
+      List<String> Function()? builderFunction, 
+      Bean2? bean2, 
+      }) {
     return Bean(
       name: name ?? this.name,
       list: list ?? this.list,
@@ -31,23 +30,13 @@ mixin _BeanMixin {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other is! Bean) {
-      return false;
-    }
+    if (identical(this, other)) { return true;}
+    if (other is! Bean) { return false;}
 
     if (name != other.name) return false;
-    if (!const DeepCollectionEquality().equals(list, other.list)) {
-      return false;
-    }
-    if (!const DeepCollectionEquality().equals(list2, other.list2)) {
-      return false;
-    }
-    if (!const DeepCollectionEquality().equals(map, other.map)) {
-      return false;
-    }
+    if (!const DeepCollectionEquality().equals(list, other.list)) { return false;}
+    if (!const DeepCollectionEquality().equals(list2, other.list2)) { return false;}
+    if (!const DeepCollectionEquality().equals(map, other.map)) { return false;}
     if (builderFunction != other.builderFunction) return false;
     if (bean2 != other.bean2) return false;
     return true;
@@ -63,21 +52,20 @@ mixin _BeanMixin {
       bean2.hashCode;
 
   Map<String, dynamic> toMap() => {
-        'name': name,
-        'list': list,
-        'list2': list2,
-        'map': map,
-        'builderFunction': builderFunction,
-        'bean2': bean2,
-      };
+    'name': name,
+    'list': list,
+    'list2': list2,
+    'map': map,
+    'builderFunction': builderFunction,
+    'bean2': bean2,
+  };
 }
 
 mixin _Bean3 {
   abstract final String name;
 
-  Bean3 copyWith({
-    String? name,
-  }) {
+  Bean3 copyWith({String? name, 
+      }) {
     return Bean3(
       name: name ?? this.name,
     );
@@ -85,21 +73,19 @@ mixin _Bean3 {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other is! Bean3) {
-      return false;
-    }
+    if (identical(this, other)) { return true;}
+    if (other is! Bean3) { return false;}
 
     if (name != other.name) return false;
     return true;
   }
 
   @override
-  int get hashCode => name.hashCode;
+  int get hashCode =>
+      name.hashCode;
 
   Map<String, dynamic> toMap() => {
-        'name': name,
-      };
+    'name': name,
+  };
 }
+

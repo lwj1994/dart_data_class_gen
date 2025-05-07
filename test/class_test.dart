@@ -1,14 +1,14 @@
 // @author luwenjie on 2025/4/19 17:38:43
 
 import 'package:collection/collection.dart';
-import 'package:data_class_annotation/data_class_annotation.dart';
+import 'package:data_class_annotation/data_class_annotation.dart' as data_class_annotation;
 
 part 'class_test.data.dart';
 
-@dataClass
+@data_class_annotation.dataClass
 class Bean with _BeanMixin {
   @override
-  @JsonKey(name: "name2", readValue: Bean.redValue)
+  @data_class_annotation.JsonKey(name: "name2", readValue: Bean.redValue)
   final String name;
   @override
   final List<String> list;
@@ -73,7 +73,7 @@ class Bean2 {
 //</editor-fold>
 }
 
-@DataClass(fromMap: false, name: "_Bean3")
+@data_class_annotation.DataClass(fromMap: false, name: "_Bean3")
 class Bean3 with _Bean3 {
   @override
   final String name;

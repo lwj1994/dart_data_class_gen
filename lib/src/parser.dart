@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
 
 import 'model.dart';
@@ -28,19 +29,20 @@ class Parser {
     final unit = parseRes.unit;
     for (var declaration in unit.declarations) {
       if (declaration is ClassDeclaration) {
-        final hasDataAnnotation = declaration.metadata.any((m) {
-          return m.name.name == "DataClass" || m.name.name == "dataClass";
+        final meta = declaration.metadata.firstWhereOrNull((e) {
+          String s = e.name.name;
+          if (s.contains(".")) {
+            s = s.split(".").last;
+          }
+          return s == "DataClass" || s == "dataClass";
         });
-        if (!hasDataAnnotation) continue;
+
+        if (meta == null) continue;
 
         final className = declaration.name.lexeme;
         final fields = <FieldInfo>[];
         final defaultValueMap = <String, String>{};
         print("find class $className");
-
-        final meta = declaration.metadata.firstWhere((e) {
-          return e.name.name == "dataClass" || e.name.name == "DataClass";
-        });
 
         bool fromMap = false;
         String mixinName = "";
