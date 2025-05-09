@@ -87,20 +87,35 @@ class Parser {
             final type = member.fields.type?.toSource() ?? 'dynamic';
             JsonKeyInfo? jsonKeyInfo;
             for (var e in member.metadata) {
-              final name = e.name.name;
-              if (name == "JsonKey") {
-                jsonKeyInfo = JsonKeyInfo(name: "", readValue: "");
+              String s = e.name.name;
+              if (s.contains(".")) {
+                s = s.split(".").last;
+              }
+
+              if (s == "JsonKey") {
+                jsonKeyInfo = JsonKeyInfo(
+                  name: "",
+                  readValue: "",
+                  ignore: false,
+                );
                 List<Expression> arguments = e.arguments?.arguments ?? [];
                 for (var element in arguments) {
                   if (element is NamedExpression) {
                     final name = element.name.label.name;
                     if (name == "name") {
                       jsonKeyInfo = jsonKeyInfo!.copyWith(
-                        name: element.expression.toSource(),
+                        name: element.expression
+                            .toSource()
+                            .replaceAll("\"", "")
+                            .replaceAll("'", ""),
                       );
                     } else if (name == "readValue") {
                       jsonKeyInfo = jsonKeyInfo!.copyWith(
                         readValue: element.expression.toSource(),
+                      );
+                    } else if (name == "ignore") {
+                      jsonKeyInfo = jsonKeyInfo!.copyWith(
+                        ignore: element.expression.toSource() == "true",
                       );
                     }
                   }

@@ -81,7 +81,7 @@ class ClassInfo {
     );
   }
 
-  //</editor-fold>
+//</editor-fold>
 }
 
 class FieldInfo {
@@ -171,15 +171,21 @@ class FieldInfo {
     );
   }
 
-  //</editor-fold>
+//</editor-fold>
 }
 
 class JsonKeyInfo {
   final String name;
   final String readValue;
+  final bool ignore;
 
-  //<editor-fold desc="Data Methods">
-  const JsonKeyInfo({required this.name, required this.readValue});
+//<editor-fold desc="Data Methods">
+
+  const JsonKeyInfo({
+    required this.name,
+    required this.readValue,
+    required this.ignore,
+  });
 
   @override
   bool operator ==(Object other) =>
@@ -187,33 +193,48 @@ class JsonKeyInfo {
       (other is JsonKeyInfo &&
           runtimeType == other.runtimeType &&
           name == other.name &&
-          readValue == other.readValue);
+          readValue == other.readValue &&
+          ignore == other.ignore);
 
   @override
-  int get hashCode => name.hashCode ^ readValue.hashCode;
+  int get hashCode => name.hashCode ^ readValue.hashCode ^ ignore.hashCode;
 
   @override
   String toString() {
-    return 'JsonKeyInfo{' ' name: $name,' ' readValue: $readValue,' '}';
+    return 'JsonKeyInfo{'
+        ' name: $name,'
+        ' readValue: $readValue,'
+        ' ignore: $ignore,'
+        '}';
   }
 
-  JsonKeyInfo copyWith({String? name, String? readValue}) {
+  JsonKeyInfo copyWith({
+    String? name,
+    String? readValue,
+    bool? ignore,
+  }) {
     return JsonKeyInfo(
       name: name ?? this.name,
       readValue: readValue ?? this.readValue,
+      ignore: ignore ?? this.ignore,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'readValue': readValue};
+    return {
+      'name': name,
+      'readValue': readValue,
+      'ignore': ignore,
+    };
   }
 
   factory JsonKeyInfo.fromMap(Map<String, dynamic> map) {
     return JsonKeyInfo(
       name: map['name'] as String,
       readValue: map['readValue'] as String,
+      ignore: map['ignore'] as bool,
     );
   }
 
-  //</editor-fold>
+//</editor-fold>
 }

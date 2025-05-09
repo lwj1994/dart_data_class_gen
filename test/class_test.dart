@@ -1,14 +1,19 @@
 // @author luwenjie on 2025/4/19 17:38:43
 
 import 'package:collection/collection.dart';
-import 'package:data_class_annotation/data_class_annotation.dart' as data_class_annotation;
+import 'package:data_class_annotation/data_class_annotation.dart'
+    as data_class_annotation;
 
 part 'class_test.data.dart';
 
-@data_class_annotation.dataClass
+@data_class_annotation.DataClass(fromMap: true)
 class Bean with _BeanMixin {
   @override
-  @data_class_annotation.JsonKey(name: "name2", readValue: Bean.redValue)
+  @data_class_annotation.JsonKey(
+    name: "name2",
+    readValue: Bean.redValue,
+    ignore: true,
+  )
   final String name;
   @override
   final List<String> list;
@@ -18,6 +23,7 @@ class Bean with _BeanMixin {
   final Map<String, dynamic> map;
 
   @override
+  @data_class_annotation.JsonKey(ignore: true)
   final List<String> Function()? builderFunction;
 
   @override

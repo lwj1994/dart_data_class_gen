@@ -14,7 +14,12 @@ const dataClass = DataClass();
 
 class JsonKey {
   final String name;
+  final bool ignore;
   final Object? Function(Map<dynamic, dynamic> map, String key)? readValue;
 
-  const JsonKey({this.name = "", this.readValue});
+  const JsonKey({
+    this.name = "",
+    this.readValue,
+    this.ignore = false,
+  });
 }
