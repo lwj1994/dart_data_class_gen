@@ -145,7 +145,7 @@ class Parser {
         classes.add(
           ClassInfo(
             name: className,
-            mixinName: mixinName.isEmpty ? '_${className}Mixin' : mixinName,
+            mixinName: mixinName.isEmpty ? '${className}Mixin' : mixinName,
             fields: fields,
             fromMap: fromMap,
           ),
