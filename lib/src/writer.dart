@@ -166,14 +166,14 @@ class Writer {
               "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => e.toString()).toList() : null)$dv";
         } else {
           getValueExpression =
-              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => $itemType.fromMap(e)).toList() : null)$dv";
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => ${clazz.mixinName}.fromMap(e)).toList() : null)$dv";
         }
       } else if (field.type.isMap()) {
         getValueExpression = "($valueExpress as Map<String, dynamic>?) $dv";
       } else {
         // object
         getValueExpression =
-            "$valueExpress != null ? ${field.type}.fromMap($valueExpress) $dv : null";
+            "$valueExpress != null ? ${field.type}Mixin.fromMap($valueExpress) $dv : null";
       }
 
       buffer.writeln("    ${field.name}: $getValueExpression,");
