@@ -3,7 +3,7 @@
 
 part of 'class_test.dart';
 
-mixin _BeanMixin {
+mixin BeanMixin {
   abstract final String name;
   abstract final List<String> list;
   abstract final List<Bean2> list2;
@@ -69,7 +69,7 @@ mixin _BeanMixin {
         'bean2': bean2,
       };
 
-  static Bean fromMap(Map<String, dynamic> map) {
+  static Bean fromJson(Map<String, dynamic> map) {
     return Bean(
       list: (map['list'] != null
               ? (map['list'] as List<dynamic>?)
@@ -79,12 +79,12 @@ mixin _BeanMixin {
           const [],
       list2: (map['list2'] != null
               ? (map['list2'] as List<dynamic>?)
-                  ?.map((e) => Bean2.fromMap(e))
+                  ?.map((e) => Bean2Mixin.fromJson(e))
                   .toList()
               : null) ??
           const [],
       map: (map['map'] as Map<String, dynamic>?) ?? const {},
-      bean2: map['bean2'] != null ? Bean2?.fromMap(map['bean2']) : null,
+      bean2: map['bean2'] != null ? Bean2Mixin.fromJson(map['bean2']) : null,
     );
   }
 }

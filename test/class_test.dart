@@ -6,8 +6,8 @@ import 'package:data_class_annotation/data_class_annotation.dart'
 
 part 'class_test.data.dart';
 
-@data_class_annotation.DataClass(fromMap: true)
-class Bean with _BeanMixin {
+@data_class_annotation.DataClass(fromMap: true, fromMapName: "fromJson")
+class Bean with BeanMixin {
   @override
   @data_class_annotation.JsonKey(
     name: "name2",
@@ -72,7 +72,7 @@ class Bean2 {
     return {'name': name};
   }
 
-  factory Bean2.fromMap(Map<String, dynamic> map) {
+  factory Bean2.fromJson(Map<String, dynamic> map) {
     return Bean2(name: map['name'] as String);
   }
 

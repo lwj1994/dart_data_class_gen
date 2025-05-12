@@ -46,6 +46,7 @@ class Parser {
 
         bool fromMap = false;
         String mixinName = "";
+        String fromMapName = "";
         List<Expression> arguments = meta.arguments?.arguments ?? [];
         for (var value in arguments) {
           if (value is NamedExpression) {
@@ -55,6 +56,8 @@ class Parser {
               fromMap = value.expression.toSource() == "true";
             } else if (name == "name") {
               mixinName = value.expression.toSource().replaceAll("\"", "");
+            } else if (name == "fromMapName") {
+              fromMapName = value.expression.toSource().replaceAll("\"", "");
             }
           }
         }
@@ -148,6 +151,7 @@ class Parser {
             mixinName: mixinName.isEmpty ? '${className}Mixin' : mixinName,
             fields: fields,
             fromMap: fromMap,
+            fromMapName: fromMapName.isEmpty ? "fromMap" : fromMapName,
           ),
         );
       }

@@ -14,6 +14,7 @@ class ParseResult {
 class ClassInfo {
   final String name;
   final String mixinName;
+  final String fromMapName;
   final bool fromMap;
   final List<FieldInfo> fields;
 
@@ -22,6 +23,7 @@ class ClassInfo {
     required this.name,
     required this.mixinName,
     required this.fromMap,
+    required this.fromMapName,
     required this.fields,
   });
 
@@ -33,11 +35,16 @@ class ClassInfo {
           name == other.name &&
           mixinName == other.mixinName &&
           fromMap == other.fromMap &&
+          fromMapName == other.fromMapName &&
           fields == other.fields);
 
   @override
   int get hashCode =>
-      name.hashCode ^ mixinName.hashCode ^ fromMap.hashCode ^ fields.hashCode;
+      name.hashCode ^
+      mixinName.hashCode ^
+      fromMap.hashCode ^
+      fromMapName.hashCode ^
+      fields.hashCode;
 
   @override
   String toString() {
@@ -45,6 +52,7 @@ class ClassInfo {
         ' name: $name,'
         ' mixinName: $mixinName,'
         ' fromMap: $fromMap,'
+        ' fromMapName: $fromMapName,'
         ' fields: $fields,'
         '}';
   }
@@ -53,10 +61,12 @@ class ClassInfo {
     String? name,
     String? mixinName,
     bool? fromMap,
+    String? fromMapName,
     List<FieldInfo>? fields,
   }) {
     return ClassInfo(
       name: name ?? this.name,
+      fromMapName: fromMapName ?? this.fromMapName,
       mixinName: mixinName ?? this.mixinName,
       fromMap: fromMap ?? this.fromMap,
       fields: fields ?? this.fields,
@@ -68,6 +78,7 @@ class ClassInfo {
       'name': name,
       'mixinName': mixinName,
       'fromMap': fromMap,
+      'fromMapName': fromMapName,
       'fields': fields,
     };
   }
@@ -75,6 +86,7 @@ class ClassInfo {
   factory ClassInfo.fromMap(Map<String, dynamic> map) {
     return ClassInfo(
       name: map['name'] as String,
+      fromMapName: map['fromMapName'] as String,
       mixinName: map['mixinName'] as String,
       fromMap: map['fromMap'] as bool,
       fields: map['fields'] as List<FieldInfo>,

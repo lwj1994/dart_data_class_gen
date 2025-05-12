@@ -119,8 +119,9 @@ class Writer {
   }
 
   void _buildFromMap(StringBuffer buffer, ClassInfo clazz) {
+    final fromMapName = clazz.fromMapName;
     buffer.writeln(
-      '\n  static ${clazz.name} fromMap(Map<String, dynamic> map)  {',
+      '\n  static ${clazz.name} $fromMapName(Map<String, dynamic> map)  {',
     );
     buffer.writeln('    return ${clazz.name}(');
     for (final field in clazz.fields) {
@@ -159,21 +160,28 @@ class Writer {
       } else if (field.type.isList()) {
         final index = field.type.indexOf("<");
         final index2 = field.type.indexOf(">");
-        final itemType = field.type.substring(index + 1, index2);
+        String itemType = field.type.substring(index + 1, index2);
 
         if (itemType == "String") {
           getValueExpression =
               "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => e.toString()).toList() : null)$dv";
         } else {
+          if (itemType.endsWith("?")) {
+            itemType = itemType.substring(0, itemType.length - 1);
+          }
           getValueExpression =
-              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => ${itemType}Mixin.fromMap(e)).toList() : null)$dv";
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => ${itemType}Mixin.$fromMapName(e)).toList() : null)$dv";
         }
       } else if (field.type.isMap()) {
         getValueExpression = "($valueExpress as Map<String, dynamic>?) $dv";
       } else {
+        String itemType = field.type;
+        if (itemType.endsWith("?")) {
+          itemType = itemType.substring(0, itemType.length - 1);
+        }
         // object
         getValueExpression =
-            "$valueExpress != null ? ${field.type}Mixin.fromMap($valueExpress) $dv : null";
+            "$valueExpress != null ? ${itemType}Mixin.$fromMapName($valueExpress) $dv : null";
       }
 
       buffer.writeln("    ${field.name}: $getValueExpression,");

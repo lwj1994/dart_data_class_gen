@@ -36,6 +36,7 @@ void main() {
         //   final LinkedHashMap<String, String> map3;
         ClassInfo(
           name: "Bean",
+          fromMapName: "",
           mixinName: "BeanDataClass",
           fields: [
             FieldInfo(name: "name", type: "String"),
