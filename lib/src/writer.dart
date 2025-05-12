@@ -170,7 +170,7 @@ class Writer {
             itemType = itemType.substring(0, itemType.length - 1);
           }
           getValueExpression =
-              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => ${itemType}.$fromMapName(e)).toList() : null)$dv";
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => $itemType.$fromMapName(e)).toList() : null)$dv";
         }
       } else if (field.type.isMap()) {
         getValueExpression = "($valueExpress as Map<String, dynamic>?) $dv";
@@ -181,7 +181,7 @@ class Writer {
         }
         // object
         getValueExpression =
-            "$valueExpress != null ? ${itemType}.$fromMapName($valueExpress) $dv : null";
+            "$valueExpress != null ? $itemType.$fromMapName($valueExpress) $dv : null";
       }
 
       buffer.writeln("    ${field.name}: $getValueExpression,");
