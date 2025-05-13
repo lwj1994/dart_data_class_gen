@@ -220,10 +220,11 @@ class JsonKeyInfo {
   @override
   String toString() {
     return 'JsonKeyInfo{'
-            ' name: $name,'
-            ' alternateNames: $alternateNames,'
-            ' readValue: $readValue,'
-            ' ignore: $ignore,' '}';
+        ' name: $name,'
+        ' alternateNames: $alternateNames,'
+        ' readValue: $readValue,'
+        ' ignore: $ignore,'
+        '}';
   }
 
   JsonKeyInfo copyWith({

@@ -5,6 +5,7 @@ part of 'class_test.dart';
 
 mixin _Bean {
   abstract final String name;
+  abstract final bool recc;
   abstract final List<String> list;
   abstract final List<Bean2> list2;
   abstract final Map<String, dynamic> map;
@@ -14,6 +15,7 @@ mixin _Bean {
 
   Bean copyWith({
     String? name,
+    bool? recc,
     List<String>? list,
     List<Bean2>? list2,
     Map<String, dynamic>? map,
@@ -23,6 +25,7 @@ mixin _Bean {
   }) {
     return Bean(
       name: name ?? this.name,
+      recc: recc ?? this.recc,
       list: list ?? this.list,
       list2: list2 ?? this.list2,
       map: map ?? this.map,
@@ -42,6 +45,7 @@ mixin _Bean {
     }
 
     if (name != other.name) return false;
+    if (recc != other.recc) return false;
     if (!const DeepCollectionEquality().equals(list, other.list)) {
       return false;
     }
@@ -60,6 +64,7 @@ mixin _Bean {
   @override
   int get hashCode =>
       name.hashCode ^
+      recc.hashCode ^
       const DeepCollectionEquality().hash(list) ^
       const DeepCollectionEquality().hash(list2) ^
       const DeepCollectionEquality().hash(map) ^
@@ -69,6 +74,7 @@ mixin _Bean {
 
   Map<String, dynamic> toMap() => {
         'name2': name,
+        'isBool': recc,
         'list': list,
         'list2': list2,
         'map': map,
@@ -81,6 +87,8 @@ mixin _Bean {
       name:
           (map['name2'] ?? map['xx'] ?? map['xxx'] ?? map['xxx'])?.toString() ??
               "a",
+      recc: ((map['isBool']) != null ? ((map['isBool']) as bool?) : null) ??
+          false,
       list: ((map['list']) != null
               ? ((map['list']) as List<dynamic>?)
                   ?.map((e) => e.toString())

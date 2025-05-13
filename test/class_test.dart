@@ -19,6 +19,9 @@ class Bean with _Bean {
   )
   final String name;
   @override
+  @data_class_annotation.JsonKey(name: "isBool")
+  final bool recc;
+  @override
   final List<String> list;
   @override
   final List<Bean2> list2;
@@ -48,6 +51,7 @@ class Bean with _Bean {
     this.map = const {},
     this.bean2,
     this.bean3,
+    this.recc = false,
     this.builderFunction,
   });
 }

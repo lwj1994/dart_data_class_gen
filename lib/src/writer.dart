@@ -169,16 +169,16 @@ class Writer {
         getValueExpression = "$valueExpress?.toString()$dv";
       } else if (field.type == "bool") {
         getValueExpression =
-            "$valueExpress != null ? ($valueExpress as bool?) $dv : null";
+            "($valueExpress != null ? ($valueExpress as bool?) : null) $dv ";
       } else if (field.type == "int") {
         getValueExpression =
-            "$valueExpress != null ? int.tryParse($valueExpress?.toString() ?? '') $dv  : null";
+            "($valueExpress != null ? int.tryParse($valueExpress?.toString() ?? '') : null) $dv  ";
       } else if (field.type == "double") {
         getValueExpression =
-            "$valueExpress != null ? double.tryParse($valueExpress?.toString() ?? '') $dv : null";
+            "($valueExpress != null ? double.tryParse($valueExpress?.toString() ?? '') : null) $dv";
       } else if (field.type == "num") {
         getValueExpression =
-            "$valueExpress != null ? num.tryParse($valueExpress?.toString() ?? '') $dv : null";
+            "($valueExpress != null ? num.tryParse($valueExpress?.toString() ?? '') : null) $dv";
       } else if (field.type.isList()) {
         final index = field.type.indexOf("<");
         final index2 = field.type.indexOf(">");
@@ -186,13 +186,13 @@ class Writer {
 
         if (itemType == "String") {
           getValueExpression =
-              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => e.toString()).toList() : null)$dv";
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => e.toString()).toList() : null) $dv";
         } else {
           if (itemType.endsWith("?")) {
             itemType = itemType.substring(0, itemType.length - 1);
           }
           getValueExpression =
-              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => $itemType.$fromMapName(e)).toList() : null)$dv";
+              "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => $itemType.$fromMapName(e)).toList() : null) $dv";
         }
       } else if (field.type.isMap()) {
         getValueExpression = "($valueExpress as Map<String, dynamic>?) $dv";
