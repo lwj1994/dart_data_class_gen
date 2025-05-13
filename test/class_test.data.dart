@@ -9,6 +9,7 @@ mixin _Bean {
   abstract final List<String> list;
   abstract final List<Bean2> list2;
   abstract final Map<String, dynamic> map;
+  abstract final List<Map<String, dynamic>> map2;
   abstract final List<String> Function()? builderFunction;
   abstract final Bean2? bean2;
   abstract final Bean3? bean3;
@@ -19,6 +20,7 @@ mixin _Bean {
     List<String>? list,
     List<Bean2>? list2,
     Map<String, dynamic>? map,
+    List<Map<String, dynamic>>? map2,
     List<String> Function()? builderFunction,
     Bean2? bean2,
     Bean3? bean3,
@@ -29,6 +31,7 @@ mixin _Bean {
       list: list ?? this.list,
       list2: list2 ?? this.list2,
       map: map ?? this.map,
+      map2: map2 ?? this.map2,
       builderFunction: builderFunction ?? this.builderFunction,
       bean2: bean2 ?? this.bean2,
       bean3: bean3 ?? this.bean3,
@@ -55,6 +58,9 @@ mixin _Bean {
     if (!const DeepCollectionEquality().equals(map, other.map)) {
       return false;
     }
+    if (!const DeepCollectionEquality().equals(map2, other.map2)) {
+      return false;
+    }
     if (builderFunction != other.builderFunction) return false;
     if (bean2 != other.bean2) return false;
     if (bean3 != other.bean3) return false;
@@ -68,6 +74,7 @@ mixin _Bean {
       const DeepCollectionEquality().hash(list) ^
       const DeepCollectionEquality().hash(list2) ^
       const DeepCollectionEquality().hash(map) ^
+      const DeepCollectionEquality().hash(map2) ^
       const DeepCollectionEquality().hash(builderFunction) ^
       bean2.hashCode ^
       bean3.hashCode;
@@ -78,6 +85,7 @@ mixin _Bean {
         'list': list,
         'list2': list2,
         'map': map,
+        'map2': map2,
         'bean2': bean2,
         'bean3': bean3,
       };
@@ -102,6 +110,10 @@ mixin _Bean {
               : null) ??
           const [],
       map: ((map['map']) as Map<String, dynamic>?) ?? const {},
+      map2: ((map['map2']) != null
+              ? ((map['map2']) as List<Map<String, dynamic>>)
+              : null) ??
+          const [],
       bean2: (map['bean2']) != null ? Bean2.fromJson((map['bean2'])) : null,
       bean3: (map['bean3']) != null ? Bean3.fromJson((map['bean3'])) : null,
     );

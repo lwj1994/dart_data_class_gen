@@ -27,6 +27,7 @@ class Bean with _Bean {
   final List<Bean2> list2;
   @override
   final Map<String, dynamic> map;
+  final List<Map<String, dynamic>> map2;
 
   @override
   @data_class_annotation.JsonKey(ignore: true)
@@ -48,6 +49,7 @@ class Bean with _Bean {
     this.name = "a",
     this.list = const [],
     this.list2 = const [],
+    this.map2 = const [],
     this.map = const {},
     this.bean2,
     this.bean3,

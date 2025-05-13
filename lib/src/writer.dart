@@ -183,8 +183,11 @@ class Writer {
         final index = field.type.indexOf("<");
         final index2 = field.type.indexOf(">");
         String itemType = field.type.substring(index + 1, index2);
-
-        if (itemType == "String") {
+        if(itemType.isMap()){
+          getValueExpression =
+          "($valueExpress != null ? ($valueExpress as List<Map<String, dynamic>>) : null) $dv";
+        }
+        else if (itemType == "String") {
           getValueExpression =
               "($valueExpress != null ? ($valueExpress as List<dynamic>?)?.map((e) => e.toString()).toList() : null) $dv";
         } else {
