@@ -109,11 +109,16 @@ class Writer {
 
   void _buildToMap(StringBuffer buffer, ClassInfo clazz) {
     buffer.writeln('\n  Map<String, dynamic> toMap() => {');
+
     for (final field in clazz.fields) {
+      String key = field.name;
       if (field.jsonKey?.ignore == true) {
         continue;
       }
-      buffer.writeln("    '${field.name}': ${field.name},");
+      if (field.jsonKey?.name.isNotEmpty == true) {
+        key = field.jsonKey?.name ?? "";
+      }
+      buffer.writeln("    '$key': ${field.name},");
     }
     buffer.writeln('  };');
   }

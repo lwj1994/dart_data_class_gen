@@ -68,7 +68,7 @@ mixin _Bean {
       bean3.hashCode;
 
   Map<String, dynamic> toMap() => {
-        'name': name,
+        'name2': name,
         'list': list,
         'list2': list2,
         'map': map,
