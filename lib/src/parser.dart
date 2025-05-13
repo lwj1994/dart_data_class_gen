@@ -100,6 +100,7 @@ class Parser {
                   name: "",
                   readValue: "",
                   ignore: false,
+                  alternateNames: [],
                 );
                 List<Expression> arguments = e.arguments?.arguments ?? [];
                 for (var element in arguments) {
@@ -119,6 +120,18 @@ class Parser {
                     } else if (name == "ignore") {
                       jsonKeyInfo = jsonKeyInfo!.copyWith(
                         ignore: element.expression.toSource() == "true",
+                      );
+                    } else if (name == "alternateNames") {
+                      final s = element.expression
+                          .toSource()
+                          .replaceAll("[", "")
+                          .replaceAll("\"", "")
+                          .replaceAll(" ", "")
+                          .replaceAll("]", "");
+
+                      jsonKeyInfo = jsonKeyInfo!.copyWith(
+                        alternateNames:
+                            s.split(',').where((e) => e.isNotEmpty).toList(),
                       );
                     }
                   }

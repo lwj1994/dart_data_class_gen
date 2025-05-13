@@ -11,8 +11,11 @@ class Bean with _Bean {
   @override
   @data_class_annotation.JsonKey(
     name: "name2",
-    readValue: Bean.redValue,
-    ignore: true,
+    alternateNames: [
+      "xx",
+      "xxx",
+      "xxx",
+    ],
   )
   final String name;
   @override
@@ -31,7 +34,10 @@ class Bean with _Bean {
   @override
   final Bean3? bean3;
 
-  static Object? redValue(Map map, String key) {
+  static Object? redValue(
+    Map map,
+    String key,
+  ) {
     return map[key];
   }
 

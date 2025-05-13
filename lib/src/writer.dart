@@ -128,19 +128,36 @@ class Writer {
       if (field.jsonKey?.ignore == true) {
         continue;
       }
-      String jsonKey = field.name;
+      List<String> jsonKeys = [];
       if (field.jsonKey?.name.isNotEmpty == true) {
-        jsonKey = field.jsonKey?.name ?? "";
+        jsonKeys.add(field.jsonKey?.name ?? "");
+      } else {
+        jsonKeys.add(field.name);
       }
+      if (field.jsonKey?.alternateNames.isNotEmpty == true) {
+        jsonKeys.addAll(field.jsonKey?.alternateNames ?? []);
+      }
+
       String getValueExpression = "";
       String dv = "";
       if (field.defaultValue.isNotEmpty) {
         dv = " ?? ${field.defaultValue}";
       }
 
-      String valueExpress = "map['$jsonKey']";
+      String valueExpress = "(";
+      for (int i = 0; i < jsonKeys.length; i++) {
+        final e = jsonKeys[i];
+        if (i == 0) {
+          //
+          valueExpress += "map['$e']";
+        } else {
+          valueExpress += "?? map['$e']";
+        }
+      }
+      valueExpress += ")";
+
       if (field.jsonKey?.readValue.isNotEmpty == true) {
-        valueExpress = "${field.jsonKey?.readValue}(map, '$jsonKey')";
+        valueExpress = "${field.jsonKey?.readValue}(map, '${jsonKeys[0]}',)";
       }
 
       if (field.type == "String") {

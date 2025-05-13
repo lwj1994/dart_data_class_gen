@@ -188,13 +188,14 @@ class FieldInfo {
 
 class JsonKeyInfo {
   final String name;
+  final List<String> alternateNames;
   final String readValue;
   final bool ignore;
 
 //<editor-fold desc="Data Methods">
-
   const JsonKeyInfo({
     required this.name,
+    required this.alternateNames,
     required this.readValue,
     required this.ignore,
   });
@@ -205,28 +206,32 @@ class JsonKeyInfo {
       (other is JsonKeyInfo &&
           runtimeType == other.runtimeType &&
           name == other.name &&
+          alternateNames == other.alternateNames &&
           readValue == other.readValue &&
           ignore == other.ignore);
 
   @override
-  int get hashCode => name.hashCode ^ readValue.hashCode ^ ignore.hashCode;
+  int get hashCode =>
+      name.hashCode ^
+      alternateNames.hashCode ^
+      readValue.hashCode ^
+      ignore.hashCode;
 
   @override
   String toString() {
-    return 'JsonKeyInfo{'
-        ' name: $name,'
-        ' readValue: $readValue,'
-        ' ignore: $ignore,'
+    return 'JsonKeyInfo{' ' name: $name,' ' alternateNames: $alternateNames,' ' readValue: $readValue,' ' ignore: $ignore,' +
         '}';
   }
 
   JsonKeyInfo copyWith({
     String? name,
+    List<String>? alternateNames,
     String? readValue,
     bool? ignore,
   }) {
     return JsonKeyInfo(
       name: name ?? this.name,
+      alternateNames: alternateNames ?? this.alternateNames,
       readValue: readValue ?? this.readValue,
       ignore: ignore ?? this.ignore,
     );
@@ -235,6 +240,7 @@ class JsonKeyInfo {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'alternateNames': alternateNames,
       'readValue': readValue,
       'ignore': ignore,
     };
@@ -243,6 +249,7 @@ class JsonKeyInfo {
   factory JsonKeyInfo.fromMap(Map<String, dynamic> map) {
     return JsonKeyInfo(
       name: map['name'] as String,
+      alternateNames: map['alternateNames'] as List<String>,
       readValue: map['readValue'] as String,
       ignore: map['ignore'] as bool,
     );
