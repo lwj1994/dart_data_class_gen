@@ -2,13 +2,13 @@
 
 class DataClass {
   final String name;
-  final bool fromMap;
   final String fromMapName;
+  final bool? fromMap;
 
   const DataClass({
     this.name = "",
-    this.fromMap = true,
     this.fromMapName = "",
+    this.fromMap,
   });
 }
 
