@@ -6,7 +6,7 @@ import 'package:data_class_annotation/data_class_annotation.dart'
 
 part 'class_test.data.dart';
 
-@data_class_annotation.DataClass(fromMap: true, fromMapName: "fromJson")
+@data_class_annotation.DataClass(fromMap: null, fromMapName: "fromJson")
 class Bean with _Bean {
   @override
   @data_class_annotation.JsonKey(
@@ -27,6 +27,7 @@ class Bean with _Bean {
   final List<Bean2> list2;
   @override
   final Map<String, dynamic> map;
+  @override
   final List<Map<String, dynamic>> map2;
 
   @override
@@ -58,7 +59,7 @@ class Bean with _Bean {
   });
 }
 
-@data_class_annotation.DataClass(fromMap: true, name: "_Bean3")
+@data_class_annotation.DataClass()
 class Bean3 with _Bean3 {
   @override
   final String name;
@@ -68,7 +69,7 @@ class Bean3 with _Bean3 {
   });
 
   factory Bean3.fromJson(Map<String, dynamic> map) {
-    return _Bean3.fromMap(map);
+    return _Bean3.fromJson(map);
   }
 }
 

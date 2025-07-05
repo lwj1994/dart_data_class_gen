@@ -11,3 +11,5 @@ class GlobalConfig {
     this.includeToMap = false,
   });
 }
+
+var config = GlobalConfig();

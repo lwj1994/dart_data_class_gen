@@ -15,15 +15,17 @@ class ClassInfo {
   final String name;
   final String mixinName;
   final String fromMapName;
+  final String toMapName;
   final bool fromMap;
   final List<FieldInfo> fields;
 
-  //<editor-fold desc="Data Methods">
+//<editor-fold desc="Data Methods">
   const ClassInfo({
     required this.name,
     required this.mixinName,
-    required this.fromMap,
     required this.fromMapName,
+    required this.toMapName,
+    required this.fromMap,
     required this.fields,
   });
 
@@ -34,40 +36,41 @@ class ClassInfo {
           runtimeType == other.runtimeType &&
           name == other.name &&
           mixinName == other.mixinName &&
-          fromMap == other.fromMap &&
           fromMapName == other.fromMapName &&
+          toMapName == other.toMapName &&
+          fromMap == other.fromMap &&
           fields == other.fields);
 
   @override
   int get hashCode =>
       name.hashCode ^
       mixinName.hashCode ^
-      fromMap.hashCode ^
       fromMapName.hashCode ^
+      toMapName.hashCode ^
+      fromMap.hashCode ^
       fields.hashCode;
 
   @override
   String toString() {
-    return 'ClassInfo{'
-        ' name: $name,'
-        ' mixinName: $mixinName,'
-        ' fromMap: $fromMap,'
-        ' fromMapName: $fromMapName,'
-        ' fields: $fields,'
+    return 'ClassInfo{' ' name: $name,' ' mixinName: $mixinName,' ' fromMapName: $fromMapName,' ' toMapName: $toMapName,' +
+        ' fromMap: $fromMap,' +
+        ' fields: $fields,' +
         '}';
   }
 
   ClassInfo copyWith({
     String? name,
     String? mixinName,
-    bool? fromMap,
     String? fromMapName,
+    String? toMapName,
+    bool? fromMap,
     List<FieldInfo>? fields,
   }) {
     return ClassInfo(
       name: name ?? this.name,
-      fromMapName: fromMapName ?? this.fromMapName,
       mixinName: mixinName ?? this.mixinName,
+      fromMapName: fromMapName ?? this.fromMapName,
+      toMapName: toMapName ?? this.toMapName,
       fromMap: fromMap ?? this.fromMap,
       fields: fields ?? this.fields,
     );
@@ -77,8 +80,9 @@ class ClassInfo {
     return {
       'name': name,
       'mixinName': mixinName,
-      'fromMap': fromMap,
       'fromMapName': fromMapName,
+      'toMapName': toMapName,
+      'fromMap': fromMap,
       'fields': fields,
     };
   }
@@ -86,8 +90,9 @@ class ClassInfo {
   factory ClassInfo.fromMap(Map<String, dynamic> map) {
     return ClassInfo(
       name: map['name'] as String,
-      fromMapName: map['fromMapName'] as String,
       mixinName: map['mixinName'] as String,
+      fromMapName: map['fromMapName'] as String,
+      toMapName: map['toMapName'] as String,
       fromMap: map['fromMap'] as bool,
       fields: map['fields'] as List<FieldInfo>,
     );

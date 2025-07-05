@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:data_class_gen/data_class_gen.dart';
 import 'package:data_class_gen/src/model.dart';
 import 'package:data_class_gen/src/parser.dart';
@@ -8,6 +9,13 @@ import 'package:test/test.dart';
 
 void main() {
   test('test gen', () {
+    initialize(
+        globalConfig: GlobalConfig(
+      includeToMap: true,
+      includeFromMap: true,
+      fromMapName: "fromJson",
+      toMapName: "toJson",
+    ));
     generate(".");
   });
 
@@ -50,6 +58,7 @@ void main() {
             FieldInfo(name: "map4", type: "XXXMap<B>"),
           ],
           fromMap: false,
+          toMapName: '',
         ),
       ],
     );

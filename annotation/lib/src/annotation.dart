@@ -3,11 +3,13 @@
 class DataClass {
   final String name;
   final String fromMapName;
+  final String toMapName;
   final bool? fromMap;
 
   const DataClass({
     this.name = "",
     this.fromMapName = "",
+    this.toMapName = "",
     this.fromMap,
   });
 }

@@ -4,6 +4,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:collection/collection.dart';
+import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:path/path.dart' as p;
 
 import 'model.dart';
@@ -44,22 +45,43 @@ class Parser {
         final defaultValueMap = <String, String>{};
         print("find class $className");
 
-        bool fromMap = false;
+        bool? fromMap;
         String mixinName = "";
         String fromMapName = "";
+        String toMapName = "";
         List<Expression> arguments = meta.arguments?.arguments ?? [];
         for (var value in arguments) {
           if (value is NamedExpression) {
             final name = value.name.label.name;
             if (name == "fromMap") {
               // 处理类名
-              fromMap = value.expression.toSource() == "true";
+              final v = value.expression.toSource();
+              if (v == "null") {
+                fromMap = config.includeFromMap;
+              } else {
+                fromMap = v == "true";
+              }
             } else if (name == "name") {
               mixinName = value.expression.toSource().replaceAll("\"", "");
             } else if (name == "fromMapName") {
-              fromMapName = value.expression.toSource().replaceAll("\"", "");
+              final v = value.expression.toSource().replaceAll("\"", "");
+              if (v.isEmpty) {
+                fromMapName = config.fromMapName;
+              } else {
+                fromMapName = v;
+              }
+            } else if (name == "toMapName") {
+              final v = value.expression.toSource().replaceAll("\"", "");
+              toMapName = v;
             }
           }
+        }
+
+        if (fromMapName.isEmpty) {
+          fromMapName = config.fromMapName;
+        }
+        if (toMapName.isEmpty) {
+          toMapName = config.toMapName;
         }
 
         // ConstructorDeclaration
@@ -163,8 +185,9 @@ class Parser {
             name: className,
             mixinName: mixinName.isEmpty ? '_$className' : mixinName,
             fields: fields,
-            fromMap: fromMap,
-            fromMapName: fromMapName.isEmpty ? "fromMap" : fromMapName,
+            fromMap: fromMap ?? config.includeFromMap,
+            fromMapName: fromMapName,
+            toMapName: toMapName,
           ),
         );
       }

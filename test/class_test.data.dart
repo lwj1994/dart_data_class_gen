@@ -79,7 +79,7 @@ mixin _Bean {
       bean2.hashCode ^
       bean3.hashCode;
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         'name2': name,
         'isBool': recc,
         'list': list,
@@ -147,11 +147,11 @@ mixin _Bean3 {
   @override
   int get hashCode => name.hashCode;
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         'name': name,
       };
 
-  static Bean3 fromMap(Map<String, dynamic> map) {
+  static Bean3 fromJson(Map<String, dynamic> map) {
     return Bean3(
       name: (map['name'])?.toString() ?? "",
     );
